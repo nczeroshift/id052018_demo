@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="three.min.js"></script>
+        <script type="text/javascript" src="scene_dont_forget.js"></script>
+        <script type="text/javascript" src="scene_amiga.js"></script>
+        
+        <style type="text/css">
+            body{
+                background-color:#CCCCCC;
+            }
+        </style>
+        
+    </head>
+    <body>
+        <canvas width="640" height="320" style="width: 640px; height: 320px;"></canvas>
+    </body>
+    <script type="text/javascript">
+    
+        $(function(){
+    
+            var canvasJQ = $("canvas");
+            
+            var scene = new THREE.Scene();
+            var width = canvasJQ.width();
+            var height = canvasJQ.height();
+            
+            var renderer = new THREE.WebGLRenderer( {canvas:canvasJQ[0] , antialias: true} );
+            
+            renderer.setPixelRatio( window.devicePixelRatio );
+            renderer.setSize( width, height  );
+            renderer.autoClear = false;
+            renderer.setClearColor(new THREE.Color( 0x999999 ),1.0);    
+               
+            var text = new scene_amiga(renderer);
+            text.init();
+            
+            function animate() {
+                requestAnimationFrame( animate );
+                render();
+			}
+
+            
+            function render(){
+                renderer.clear();
+                renderer.setViewport( 0, 0, width, height);
+                text.render();
+            }
+            
+            animate();
+            
+        });
+        
+        
+      
+    </script>
+</html>
