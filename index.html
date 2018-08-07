@@ -4,6 +4,7 @@
         <script type="text/javascript" src="three.min.js"></script>
         <script type="text/javascript" src="scene_dont_forget.js"></script>
         <script type="text/javascript" src="scene_amiga.js"></script>
+        <script type="text/javascript" src="scene_triangles.js"></script>
         
         <style type="text/css">
             body{
@@ -31,8 +32,10 @@
             renderer.setSize( width, height  );
             renderer.autoClear = false;
             renderer.setClearColor(new THREE.Color( 0x999999 ),1.0);    
-               
-            var text = new scene_amiga(renderer);
+            
+            var date = null;
+            
+            var text = new scene_triangles(renderer);
             text.init();
             
             function animate() {
@@ -44,9 +47,10 @@
             function render(){
                 renderer.clear();
                 renderer.setViewport( 0, 0, width, height);
-                text.render();
+                text.render((new Date().getTime()-date.getTime())/1000.0);
             }
             
+            date = new Date();
             animate();
             
         });
