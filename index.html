@@ -2,14 +2,23 @@
     <head>
         <script type="text/javascript" src="jquery.min.js"></script>
         <script type="text/javascript" src="three.min.js"></script>
-        <script type="text/javascript" src="scene_dont_forget.js"></script>
-        <script type="text/javascript" src="scene_amiga.js"></script>
-        <script type="text/javascript" src="scene_triangles.js"></script>
-        
+        <script type="text/javascript" src="scenes/demo.js"></script>
+        <script type="text/javascript" src="scenes/scene.js"></script>
+        <script type="text/javascript" src="scenes/scene_color.js"></script>
+        <script type="text/javascript" src="scenes/scene_amiga.js"></script>
+        <script type="text/javascript" src="scenes/scene_dont_forget.js"></script>
+        <script type="text/javascript" src="scenes/scene_triangles.js"></script>
+
         <style type="text/css">
             body{
-                background-color:#CCCCCC;
+                background-color:#000;
+                padding:0;
+                margin:0;
             }
+            canvas{
+                border:1px solid #FFFFFF;
+            }
+
         </style>
         
     </head>
@@ -18,44 +27,39 @@
     </body>
     <script type="text/javascript">
     
-        $(function(){
-    
-            var canvasJQ = $("canvas");
-            
-            var scene = new THREE.Scene();
-            var width = canvasJQ.width();
-            var height = canvasJQ.height();
-            
-            var renderer = new THREE.WebGLRenderer( {canvas:canvasJQ[0] , antialias: true} );
-            
-            renderer.setPixelRatio( window.devicePixelRatio );
-            renderer.setSize( width, height  );
-            renderer.autoClear = false;
-            renderer.setClearColor(new THREE.Color( 0x999999 ),1.0);    
-            
-            var date = null;
-            
-            var text = new scene_triangles(renderer);
-            text.init();
-            
-            function animate() {
-                requestAnimationFrame( animate );
-                render();
-			}
+        
 
+        $(function(){
+            var canvas = $("canvas");
+            var demo = new Demo(canvas);
+
+            demo.init(function(d){
+
+                var c1 = new SceneColor(d, new THREE.Color(0x000000),new THREE.Color(0x999999),1.0,1.0);
+                d.addScene(c1, 0,4);
+
+                var c2 = new SceneColor(d, new THREE.Color(0x999999),new THREE.Color(0x999999),1.0,0.0);
+                c2.setOrder(100);
+                d.addScene(c2, 4,5);
+
+                var triangles = new SceneTriangles(d);
+                triangles.init();
+                d.addScene(triangles, 4,35);
+
+                //var amiga = new SceneAmiga(d);
+                //amiga.init();
+                //d.addScene(amiga, 4,35);
+             
+                var c2 = new SceneColor(d, new THREE.Color(0x999999),new THREE.Color(0x000000));
+                d.addScene(c2, 35,36);
+
+                var dontforget = new SceneDontForget(d);
+                dontforget.init();
+                d.addScene(dontforget,36,65);
             
-            function render(){
-                renderer.clear();
-                renderer.setViewport( 0, 0, width, height);
-                text.render((new Date().getTime()-date.getTime())/1000.0);
-            }
-            
-            date = new Date();
-            animate();
+                d.start();
+            });
             
         });
-        
-        
-      
     </script>
 </html>
