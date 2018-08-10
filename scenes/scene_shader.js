@@ -1,21 +1,23 @@
 
-function SceneTriangles(demo){
+function SceneShader(demo, shaderName){
     Scene.call(this,demo)
     this.scene = new THREE.Scene();
     this.material = null;
     this.mesh = null;
     this.uniforms = null;
     this._pReady = false;
+    this.shaderName = shaderName;
+    this.init();
 }
     
-SceneTriangles.prototype = Object.create(Scene.prototype);
+SceneShader.prototype = Object.create(Scene.prototype);
 
-SceneTriangles.prototype.init = function(){
+SceneShader.prototype.init = function(){
     var scope = this;
-    $.ajax({url:"shader_source.html",dataType :"html",success:function(data){
+    $.ajax({url:"shader_source.html?t="+(new Date()).getTime(),dataType :"html",success:function(data){
         var d = $("<div/>").append(data);
         var shaderVSH = d.find("#vertexShader").html();
-        var shaderFSH = d.find("#fragmentShader").html();
+        var shaderFSH = d.find("#"+scope.shaderName).html();
         
         var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
 				
@@ -26,7 +28,10 @@ SceneTriangles.prototype.init = function(){
 		var material = new THREE.ShaderMaterial( {
             uniforms: scope.uniforms,
 			vertexShader: shaderVSH,
-			fragmentShader: shaderFSH
+            fragmentShader: shaderFSH,
+            depthTest:false,
+            depthWrite:false,
+            transparent:true
 		});
         
         scope.material = material;
@@ -39,7 +44,7 @@ SceneTriangles.prototype.init = function(){
     }});
 }
     
-SceneTriangles.prototype.render = function(time){
+SceneShader.prototype.render = function(time){
     var camera = new THREE.OrthographicCamera( - 1, 1, 1, - 1, 0, 1 );
  
     if(this.mesh == null)

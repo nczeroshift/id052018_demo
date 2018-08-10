@@ -6,33 +6,92 @@
     }
 </script>
 
-<script id="fragmentShader" type="x-shader/x-fragment">
+<script id="effect1" type="x-shader/x-fragment">
     varying vec2 vUv;
     uniform float time;
-    void main()	{
-        vec2 p = - 1.0 + 2.0 * vUv;
-        float a = time * 40.0;
-        float d, e, f, g = 1.0 / 40.0 ,h ,i ,r ,q;
-        e = 400.0 * ( p.x * 0.5 + 0.5 );
-        f = 400.0 * ( p.y * 0.5 + 0.5 );
-        i = 200.0 + sin( e * g + a / 150.0 ) * 20.0;
-        d = 200.0 + cos( f * g / 2.0 ) * 18.0 + cos( e * g ) * 7.0;
-        r = sqrt( pow( abs( i - e ), 2.0 ) + pow( abs( d - f ), 2.0 ) );
-        q = f / r;
-        e = ( r * cos( q ) ) - a / 2.0;
-        f = ( r * sin( q ) ) - a / 2.0;
-        d = sin( e * g ) * 176.0 + sin( e * g ) * 164.0 + r;
-        h = ( ( f + d ) + a / 2.0 ) * g;
-        i = cos( h + r * p.x / 1.3 ) * ( e + e + a ) + cos( q * g * 6.0 ) * ( r + h / 3.0 );
-        h = sin( f * g ) * 144.0 - sin( e * g ) * 212.0 * p.x;
-        h = ( h + ( f - e ) * q + sin( r - ( a + h ) / 7.0 ) * 10.0 + i / 4.0 ) * g;
-        i += cos( h * 2.3 * sin( a / 350.0 - q ) ) * 184.0 * sin( q - ( r * 4.3 + a / 12.0 ) * g ) + tan( r * g + h ) * 184.0 * cos( r * g + h );
-        i = mod( i / 5.6, 256.0 ) / 64.0;
-        if ( i < 0.0 ) i += 4.0;
-        if ( i >= 2.0 ) i = 4.0 - i;
-        d = r / 350.0;
-        d += sin( d * d * 8.0 ) * 0.52;
-        f = ( sin( a * g ) + 1.0 ) / 2.0;
-        gl_FragColor = vec4( vec3( f * i / 1.6, i / 2.0 + d / 13.0, i ) * d * p.x + vec3( i / 1.3 + d / 8.0, i / 2.0 + d / 18.0, i ) * d * ( 1.0 - p.x ), 1.0 );
+
+    void main()
+    {
+        vec2 uv = vUv;
+        float iTime = time;
+        vec3 col = 0.25 + 0.25*cos(mod(uv.yyy+iTime*0.4,0.2)+uv.yyy*4.0+iTime+vec3(0,1,2));
+        col += 0.25+0.25*sin(iTime*2.0+uv.yxy+mod(uv.xxx+iTime*0.4,0.1));
+        gl_FragColor = vec4(col,1.0);
     }
+
+</script>
+
+
+<script id="effect2" type="x-shader/x-fragment">
+    varying vec2 vUv;
+    uniform float time;
+
+    void main()
+    {
+        vec2 uv = vUv;
+        float iTime = time;
+        vec3 col = 0.5+0.5*sin(iTime + vec3(1.0+sin(iTime +
+        uv.y),2,uv.y+0.5+0.5*sin(uv.x*20.0+5.0*cos(uv.x+uv.y+iTime))));
+        gl_FragColor = vec4(col,1.0);
+    }
+
+</script>
+
+<script id="effect3" type="x-shader/x-fragment">
+    varying vec2 vUv;
+    uniform float time;
+
+    void main()
+    {
+        vec2 uv = vUv;
+        float iTime = time;       
+        vec3 col = vec3(0.5 - 0.5*sin(uv.x+cos(uv.y*20.0+iTime*5.0) + iTime+ 5.0*sin(uv.x) - cos(uv.x*20.0)),0,0);
+        gl_FragColor = vec4(col,1.0);
+    }
+</script>
+
+<script id="effect4" type="x-shader/x-fragment">
+    varying vec2 vUv;
+    uniform float time;
+
+    void main()
+    {
+        vec2 uv = vUv;
+        float iTime = time;       
+        
+        vec2 muv = vec2( asin(0.5-uv.x*uv.y*1.1) + cos(0.5-uv.x + sin(uv.x*uv.y + iTime)), sin(0.5+uv.y) + cos(0.5+uv.y) +
+            0.15*sin(sin(uv.x*20.0)*0.2));
+
+        vec3 col = floor(mod(muv.xxx+muv.yyy*0.8+iTime*0.25,0.15)*10.0) + vec3(0.2,0.8,0.2);
+        vec3 col2 = floor(mod((-muv.xxx)+(sin(iTime)-muv.yyy)*0.8-iTime*0.25,0.15)*10.0) + vec3(0.2,0.8,0.2);
+
+        if (uv.x > 0.5) col = col2;
+
+        gl_FragColor = vec4(col,1.0);
+    }
+</script>
+
+
+
+<script id="effect5" type="x-shader/x-fragment">
+    varying vec2 vUv;
+    uniform float time;
+
+    void main()
+    {
+        vec2 uv = vUv;
+        float iTime = time;       
+        
+        float slammer = 25.0 + sin(mod(iTime, 80.0))*50.0;
+        // Time varying pixel color
+        vec3 col = 0.7
+         + 0.25*cos(iTime*0.25 + sin(uv.yxy+iTime*0.5)*2.0 + vec3(4,0,0.5))
+         + 0.25*sin(iTime*0.12 + sin(uv.yxy*2.0) + uv.yxy*slammer*0.1)
+         + 0.10*sin(iTime*2.0 + ceil(sin(iTime + uv.xyx*slammer)))
+         + 0.10*cos(iTime*0.25 + vec3(2,1,1))
+         + 0.10*cos(slammer)-0.10*sin(slammer);
+
+        gl_FragColor = vec4(col,1.0);
+    }
+
 </script>

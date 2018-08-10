@@ -1,7 +1,7 @@
 function SceneAmiga(demo){
     Scene.call(this,demo);
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color( 0x999999 );
+    this.scene.background =null;
     this.sphere = null;
     this.material = null;
     this.angle = 0.0;
@@ -11,6 +11,7 @@ function SceneAmiga(demo){
     this.velocity = new THREE.Vector3 (10.0, 0, 0);
     this.position = new THREE.Vector3( 0, 1, 0 );
     this._pReady = false;
+    this.init();
 }
     
 SceneAmiga.prototype = Object.create(Scene.prototype);
@@ -61,6 +62,7 @@ SceneAmiga.prototype.init= function(){
     this.scene.add(g4);
 
     this.scene.add( this.sphere );
+    this._pReady = true;
 }
     
 SceneAmiga.prototype.render = function(){

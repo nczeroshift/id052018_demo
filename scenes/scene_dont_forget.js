@@ -7,6 +7,7 @@ function SceneDontForget(demo){
     this.angle = 0.0;
     this.swapFlag = 0;
     this.waitFlag = 0;
+    this.init();
 }
 
 SceneDontForget.prototype = Object.create(Scene.prototype);

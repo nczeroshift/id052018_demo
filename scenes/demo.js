@@ -66,6 +66,23 @@ Demo.prototype.addScene = function(scene, start, end){
     this._pScenes.push(scene);
 }
 
+Demo.prototype.launchReadyTimer = function(done){
+    var scope = this;
+    var int = setInterval(function(){
+        var completed = 0;
+        for(var i = 0;i < scope._pScenes.length; i++){
+            if(scope._pScenes[i].isReady())
+                completed++;
+        }
+
+        if(completed === scope._pScenes.length){
+            clearTimeout(int);
+            if(done != null)
+                done();
+        }
+    },200);
+} 
+
 Demo.prototype._render = function(){
     var time = this.getTime();
     this._pRenderer.clear();
