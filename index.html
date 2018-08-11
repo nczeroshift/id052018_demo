@@ -31,9 +31,10 @@
     </head>
     <body>
         <canvas width="1280" height="720" style="width: 1280; height: 720px;"></canvas>
-        <!--<audio controls id="aplayer">
+        <audio controls id="aplayer">
             <source src="audio/megademo1.ogg" type="audio/ogg">
-        </audio>-->
+        </audio>
+		<div id="timer" style="z-index:30; position: absolute; top: 0px; left: 0px; color: white;">banana</div>
     </body>
     <script type="text/javascript">
     
@@ -72,7 +73,7 @@
                 }
 
                 var e2 = new SceneShader(d,"effect1");
-                d.addScene(e2, 14, 24);
+                d.addScene(e2, 14, 19);
 
                 var l2 = new SceneColor(d, new THREE.Color(0x000000), new THREE.Color(0x000000), 1, 0);
                 l2.setOrder(100);
@@ -80,19 +81,37 @@
 
                 var amiga = new SceneAmiga(d);
                 amiga.setOrder(50);
-                d.addScene(amiga, 20, 50);
+                d.addScene(amiga, 18, 43);
 
                 var e2 = new SceneShader(d,"effect2");
-                d.addScene(e2, 24, 34);
+                d.addScene(e2, 19, 22.5);
+				
+                var e2 = new SceneShader(d,"effect1");
+                d.addScene(e2, 22.5, 25.5);
 
+                var e2 = new SceneShader(d,"effect2");
+                d.addScene(e2, 25.5, 29.5);
+				
+                var e2 = new SceneShader(d,"effect1");
+                d.addScene(e2, 29.5, 32);
+				
+				var e2 = new SceneShader(d,"effect2");
+                d.addScene(e2, 32, 35);
+				
+				var e2 = new SceneShader(d,"effect1");
+                d.addScene(e2, 35, 36);
+				
+				var e2 = new SceneShader(d,"effect2");
+                d.addScene(e2, 36, 43);
+								
                 var e3 = new SceneShader(d,"effect3");
-                d.addScene(e3, 34, 54);
+                d.addScene(e3, 43, 54);
 
                 var e4 = new SceneShader(d,"effect4");
                 d.addScene(e4, 54, 64);
 
                 var e5 = new SceneShader(d,"effect5");
-                d.addScene(e5, 54, 64);
+                d.addScene(e5, 64, 74);
 
                 var aspect = 4.0/3.0;
 
@@ -130,11 +149,11 @@
                 d.addScene(l3, 63, 64);
 
                 var dontforget = new SceneDontForget(d);
-                d.addScene(dontforget,120,200);
+                d.addScene(dontforget,85,200);
                 
                 d.launchReadyTimer(function(){
                     d.start();   
-                    //$("#aplayer")[0].play() 
+                    $("#aplayer")[0].play() 
                 })
             });
             

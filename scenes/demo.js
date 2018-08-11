@@ -60,6 +60,8 @@ Demo.prototype.start = function(){
     });
 
     function animate(){
+		var dom  = document.getElementById('timer'); 
+		if (dom) dom.innerHTML = scope.getTime();
         requestAnimationFrame( animate );
         scope._render();
     }
