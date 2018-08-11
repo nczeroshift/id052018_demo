@@ -20,7 +20,9 @@
             }
 
             canvas{
-                border:1px solid #FFFFFF;
+                position:relative;
+                width: 100%; 
+                height: 100%;
             }
 
             #aplayer{
@@ -30,11 +32,11 @@
         
     </head>
     <body>
-        <canvas width="1280" height="720" style="width: 1280; height: 720px;"></canvas>
+        <canvas width="100%" height="100%"></canvas>
         <audio controls id="aplayer">
             <source src="audio/megademo1.ogg" type="audio/ogg">
         </audio>
-		<div id="timer" style="z-index:30; position: absolute; top: 0px; left: 0px; color: white;">banana</div>
+		<!--<div id="timer" style="z-index:30; position: absolute; top: 0px; left: 0px; color: white;">banana</div>-->
     </body>
     <script type="text/javascript">
     
@@ -143,13 +145,15 @@
                 pic3.setOrder(100);
                 d.addScene(pic3, 40,54);
 
+                var e6 = new SceneShader(d,"gears");
+                d.addScene(e6, 74, 85);
 
                 var l3 = new SceneColor(d, new THREE.Color(0x000000), new THREE.Color(0x000000), 0, 1);
                 l3.setOrder(100);
                 d.addScene(l3, 63, 64);
 
                 var dontforget = new SceneDontForget(d);
-                d.addScene(dontforget,85,200);
+                d.addScene(dontforget,85,100);
                 
                 d.launchReadyTimer(function(){
                     d.start();   
