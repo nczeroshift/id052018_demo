@@ -26,13 +26,28 @@
             }
 
             #aplayer{
-                display:none;
+                position:absolute;
+                top:0;
+                left:0;
+                opacity:0.001;
+            }
+
+            #run{
+                position:absolute;
+                top:50%;
+                left:50%;
+                width:100px;
+                height:30px;
+                border:1px solid #FFFFFF;
+                background-color:#FFFFFF;
+                margin-left:-50px;
             }
         </style>
         
     </head>
     <body>
         <canvas width="100%" height="100%"></canvas>
+        <button id="run">Run</button>
         <audio controls id="aplayer">
             <source src="audio/megademo1.ogg" type="audio/ogg">
         </audio>
@@ -40,9 +55,7 @@
     </body>
     <script type="text/javascript">
     
-        
-
-        $(function(){
+        function run(){
             var canvas = $("canvas");
             var demo = new Demo(canvas);
 
@@ -160,7 +173,14 @@
                     $("#aplayer")[0].play() 
                 })
             });
-            
+        }
+
+        $(function(){
+            $("#run").click(function(){
+                $("canvas").css({cursor:"none"});
+                $(this).hide();
+                run();
+           });
         });
     </script>
 </html>
