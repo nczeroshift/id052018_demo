@@ -30,10 +30,10 @@
         
     </head>
     <body>
-        <canvas width="640" height="320" style="width: 640px; height: 320px;"></canvas>
-        <audio controls id="aplayer">
+        <canvas width="1280" height="720" style="width: 1280; height: 720px;"></canvas>
+        <!--<audio controls id="aplayer">
             <source src="audio/megademo1.ogg" type="audio/ogg">
-        </audio>
+        </audio>-->
     </body>
     <script type="text/javascript">
     
@@ -44,51 +44,94 @@
             var demo = new Demo(canvas);
 
             demo.init(function(d){
-                var text1 = new SceneText(d,"BASS\n2005 meme",50);
-                text1.setOrder(1000);
-                text1.setPosition(function(text,time){
-                    text.position.x = 40*Math.sin(time*2);
-                    text.position.y = 40*Math.cos(time*2);
-                });
+                var c1 = new SceneColor(d, new THREE.Color(0x000000),new THREE.Color(0x000000), 1, 1);
+                d.addScene(c1, 0, 1000);
 
-                d.addScene(text1, 0,100);
+                {
+                    var l1 = new SceneColor(d, new THREE.Color(0x000000), new THREE.Color(0x000000), 1, 0);
+                    l1.setOrder(2);
+                    d.addScene(l1, 0, 7);
 
-                var c1 = new SceneColor(d, new THREE.Color(0x000000),new THREE.Color(0x999999),1.0,1.0);
-                d.addScene(c1, 0,4);
-
-                var c2 = new SceneColor(d, new THREE.Color(0x999999),new THREE.Color(0x999999),1.0,0.0);
-                c2.setOrder(100);
-                d.addScene(c2, 4,5);
-
+                    var text1 = new SceneText(d,"the\nportuguese\ndemoscene party", 25);
+                    text1.setPosition(function(m,t){
+                        m.position.x = -t*10 - 200;
+                        m.position.y = 50;
+                    });
+                    text1.setOrder(1);
+                    d.addScene(text1, 0, 14);
                 
+                    var l2 = new SceneColor(d, new THREE.Color(0x000000), new THREE.Color(0x000000), 0, 1);
+                    l2.setOrder(2);
+                    d.addScene(l2, 7, 14);
+
+                    var pic1 = new ScenePicture(d,"textures/id_logo.png", 40, 40);
+                    pic1.setPosition(function(m,t){
+                        m.position.x = t+10;
+                    });
+                    d.addScene(pic1, 0, 14);
+                }
+
+                var e2 = new SceneShader(d,"effect1");
+                d.addScene(e2, 14, 24);
+
+                var l2 = new SceneColor(d, new THREE.Color(0x000000), new THREE.Color(0x000000), 1, 0);
+                l2.setOrder(100);
+                d.addScene(l2, 14, 15);
+
                 var amiga = new SceneAmiga(d);
-                amiga.setOrder(999);
-                d.addScene(amiga, 4,34);
-             
-                var e1 = new SceneShader(d,"effect1");
-                d.addScene(e1, 4,10);
-               
-                var p1 = new ScenePicture(d,"textures/fernando_pessoa.jpg",10,10);
-                d.addScene(p1, 4,10);
+                amiga.setOrder(50);
+                d.addScene(amiga, 20, 50);
 
                 var e2 = new SceneShader(d,"effect2");
-                d.addScene(e2, 10,16);
+                d.addScene(e2, 24, 34);
 
                 var e3 = new SceneShader(d,"effect3");
-                d.addScene(e3, 16,22);
+                d.addScene(e3, 34, 54);
 
                 var e4 = new SceneShader(d,"effect4");
-                d.addScene(e4, 22,28);
+                d.addScene(e4, 54, 64);
 
                 var e5 = new SceneShader(d,"effect5");
-                d.addScene(e5, 28,34);
-              
-                var c2 = new SceneColor(d, new THREE.Color(0x999999),new THREE.Color(0x000000));
-                d.addScene(c2, 35, 36);
+                d.addScene(e5, 54, 64);
+
+                var aspect = 4.0/3.0;
+
+                var pic1 = new ScenePicture(d,"textures/belem_jeenio_truck.jpg",20 * aspect,20.0);
+                pic1.setPosition(function(m,t){
+                    t-=24;
+                    m.position.x = t*5 +Math.cos(t)* 6 - 60;
+                    m.position.y = 10 + Math.sin(t) * 5;
+                    m.rotation.y = Math.cos(t)*0.5;
+                });
+                pic1.setOrder(100);
+                d.addScene(pic1, 24, 50);
+
+                var pic2 = new ScenePicture(d,"textures/aroeira_ps_jeenio_truck.jpg", 20 * aspect,20.0);
+                pic2.setPosition(function(m,t){
+                    t-= 34;
+                    m.position.x = t*2 -10;
+                    m.position.y = -10 + Math.abs(Math.sin(t))*5;
+                });
+                pic2.setOrder(100);
+                d.addScene(pic2, 34,100);
+
+                var pic3 = new ScenePicture(d,"textures/aroeira_jeenio_playing.jpg", 15 * aspect,15.0);
+                pic3.setPosition(function(m,t){
+                    t-= 40;
+                    m.position.x = t*2 -20 +  Math.abs(Math.sin(t))*5;
+                    m.position.y = 0;
+                });
+                pic3.setOrder(100);
+                d.addScene(pic3, 40,54);
+
+
+                var l3 = new SceneColor(d, new THREE.Color(0x000000), new THREE.Color(0x000000), 0, 1);
+                l3.setOrder(100);
+                d.addScene(l3, 63, 64);
 
                 var dontforget = new SceneDontForget(d);
-                d.addScene(dontforget,36,65);
-            
+                d.addScene(dontforget,120,200);
+                
                 d.launchReadyTimer(function(){
                     d.start();   
                     //$("#aplayer")[0].play() 

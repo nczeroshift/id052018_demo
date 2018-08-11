@@ -21,7 +21,7 @@ SceneAmiga.prototype.init= function(){
 
     var geometry = new THREE.SphereGeometry( 5, 32, 32 );
 
-    this.amigaTex = new THREE.TextureLoader().load( "amiga_pattern.png" ,function(){
+    this.amigaTex = new THREE.TextureLoader().load( "textures/amiga_pattern.png" ,function(){
         scope._pReady = true;
     });
     

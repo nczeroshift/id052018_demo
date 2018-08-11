@@ -53,6 +53,12 @@ Demo.prototype.getTime = function(){
 
 Demo.prototype.start = function(){
     var scope = this;
+    this._pStart = new Date();
+    
+    this._pScenes.sort(function(a, b){
+        return a.getStart()-b.getStart();
+    });
+
     function animate(){
         requestAnimationFrame( animate );
         scope._render();
